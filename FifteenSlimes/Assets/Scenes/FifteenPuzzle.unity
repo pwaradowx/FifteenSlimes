@@ -638,6 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34408a5374391dc4cb2ea66fb39bc576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  createCheatGrid: 0
   side: 4
   tileOffset: 2.25
   slimesPrefabs:
