@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1356649475138332479}
   - component: {fileID: 1356649475138332478}
   m_Layer: 0
-  m_Name: Slime Glow Big
+  m_Name: 'Slime Glow '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356649475138332476}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.256, y: -0.67, z: -0.94}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalPosition: {x: -0.663, y: 0.718, z: -0.94}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.25}
   m_Children: []
   m_Father: {fileID: 1356649475700472852}
   m_RootOrder: 4
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 1356649475492666421}
   - component: {fileID: 1356649475492666420}
   m_Layer: 0
-  m_Name: Slime Glow Small
+  m_Name: 'Slime Glow '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,8 +123,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356649475492666378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.67, y: -0.67, z: -0.94}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalPosition: {x: -0.449, y: 0.534, z: -0.94}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.25}
   m_Children: []
   m_Father: {fileID: 1356649475700472852}
   m_RootOrder: 3
