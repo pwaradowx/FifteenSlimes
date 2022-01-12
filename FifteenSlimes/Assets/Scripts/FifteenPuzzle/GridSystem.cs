@@ -30,15 +30,11 @@ namespace Project.Assets.FifteenPuzzle
             int targetX = (int) (currentX + targetDirection.x);
             int targetY = (int) (currentY + targetDirection.y);
 
-            if (targetX < 0)
-            {
-                targetX = 0;
-            }
-            if (targetY < 0)
-            {
-                targetY = 0;
-            }
-
+            if (targetX < 0) targetX = 0;
+            if (targetY < 0) targetY = 0;
+            if (targetX > side - 1) targetX = side - 1;
+            if (targetY > side - 1) targetY = side - 1;
+            
             if (!_isIFullArray[targetX, targetY])
             {
                 Vector3 targetPosition = new Vector3(targetX, targetY) * tileOffset;

@@ -9,6 +9,8 @@ public class BackgroundColor : MonoBehaviour
     private readonly List<int> _availableColorIDs = new List<int>();
     private int _currentColorID;
 
+    private const string UnavailableIDKey = "LastBackgroundColorID";
+
     private Camera _camera;
 
     private void Awake()
@@ -20,22 +22,28 @@ public class BackgroundColor : MonoBehaviour
             _availableColorIDs.Add(i);
         }
 
-        int unavailableID = PlayerPrefs.GetInt("LastBackgroundColorID");
-        _availableColorIDs.Remove(unavailableID);
+        int unavailableID = PlayerPrefs.GetInt(UnavailableIDKey);
+        int[] except = {unavailableID};
 
-        _currentColorID = RandomExcept(0, colors.Length, unavailableID);
+        _currentColorID = RandomExcept(colors.Length, except);
         _camera.backgroundColor = colors[_currentColorID];
     }
     
-    private int RandomExcept(int min, int max, int except)
+    private int RandomExcept(int max, int[] except)
     {
-        int random = Random.Range(min, max);
-        if (random >= except) random = (random + 1) % max;
-        return random;
+        int result = Random.Range(0, max - except.Length);
+
+        for (int i = 0; i < except.Length; i++) 
+        {
+            if (result < except[i])
+                return result;
+            result++;
+        }
+        return result;
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause(bool pauseStatus)
     {
-        PlayerPrefs.SetInt("LastBackgroundColorID", _currentColorID);
+        PlayerPrefs.SetInt(UnavailableIDKey, _currentColorID);
     }
 }
