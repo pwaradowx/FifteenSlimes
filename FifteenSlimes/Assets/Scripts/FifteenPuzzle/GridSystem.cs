@@ -75,32 +75,28 @@ namespace Project.Assets.FifteenPuzzle
 
         private bool CheckWinCondition()
         {
-            int successfulConditions = 0;
-            
             for (int y = side - 1; y >= 0; y--)
             {
                 for (int x = 0; x < side; x++)
                 {
-                    if ((x == side - 1) && (y == 0))
+                    if (_slimes[x, y] != null)
                     {
-                        if (_slimes[x, y] == null)
+                        if (_gridTiles[x, y].MyNumber != _slimes[x, y].MyNumber)
                         {
-                            successfulConditions++;
+                            return false;
                         }
                     }
                     else
                     {
-                        if (_slimes[x, y] == null) continue;
-                        
-                        if (_gridTiles[x, y].MyNumber == _slimes[x, y].MyNumber)
+                        if (x != side - 1 || y != 0)
                         {
-                            successfulConditions++;
+                            return false;
                         }
                     }
                 }
             }
-            
-            return successfulConditions == 16;
+
+            return true;
         }
 
         private void Awake()
