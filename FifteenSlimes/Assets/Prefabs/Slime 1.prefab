@@ -313,6 +313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slimeobstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
 --- !u!4 &2074874731908979546 stripped
@@ -382,6 +386,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6c3fc7abe734a2643868cac5a5697de8, type: 3}
       propertyPath: m_Name
       value: oneshape
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6c3fc7abe734a2643868cac5a5697de8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c3fc7abe734a2643868cac5a5697de8, type: 3}
@@ -460,6 +468,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
       propertyPath: m_Name
       value: slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}

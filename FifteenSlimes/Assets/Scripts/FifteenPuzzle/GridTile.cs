@@ -2,29 +2,13 @@ namespace Project.Assets.FifteenPuzzle
 {
     public class GridTile
     {
-        public enum TileNumber
-        {
-            One = 1,
-            Two = 2, 
-            Three = 3, 
-            Four = 4, 
-            Five = 5, 
-            Six = 6, 
-            Seven = 7,
-            Eight = 8, 
-            Nine = 9, 
-            Ten = 10, 
-            Eleven = 11, 
-            Twelve = 12, 
-            Thirteen = 13, 
-            Fourteen = 14,
-            Fifteen = 15,
-            Empty = 16
-        }
-        
-        public TileNumber MyNumber { get; }
+        /// <summary>
+        /// Represents the actual position of the tile inside of puzzle space.
+        /// Numbers from 1 up 15 tells the position for slimes and 16 means this tile should be empty.
+        /// </summary>
+        public int MyNumber { get; }
 
-        public GridTile(TileNumber number)
+        public GridTile(int number)
         {
             MyNumber = number;
         }

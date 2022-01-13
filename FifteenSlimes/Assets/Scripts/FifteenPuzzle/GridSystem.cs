@@ -128,7 +128,7 @@ namespace Project.Assets.FifteenPuzzle
                     {
                         Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
 
-                        _gridTiles[x, y] = new GridTile((GridTile.TileNumber) actualTileNumber);
+                        _gridTiles[x, y] = new GridTile(actualTileNumber);
                         actualTileNumber++;
 
                         if (x != emptyX || y != emptyY)
@@ -136,7 +136,7 @@ namespace Project.Assets.FifteenPuzzle
                             int slimeID = GetRandomSlimeIndex();
                             if (slimeID >= 0)
                             {
-                                SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
+                                SpawnSlime(slimesPrefabs[slimeID], position);
                             }
 
                             _isIFullArray[x, y] = true;
@@ -182,7 +182,7 @@ namespace Project.Assets.FifteenPuzzle
             {
                 for (int x = 0; x < side; x++)
                 {
-                    _gridTiles[x, y] = new GridTile((GridTile.TileNumber) actualTileNumber);
+                    _gridTiles[x, y] = new GridTile(actualTileNumber);
                     actualTileNumber++;
                 }
             }

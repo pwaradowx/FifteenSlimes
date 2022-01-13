@@ -421,6 +421,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slime
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
 --- !u!4 &8702133008193119392 stripped
@@ -487,6 +491,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slimeobstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
 --- !u!4 &8702133007709202894 stripped
@@ -552,6 +560,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 44ca1699612063f489bd4b7efa5f1bfd, type: 3}
       propertyPath: m_Name
       value: thirteenshape
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 44ca1699612063f489bd4b7efa5f1bfd, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44ca1699612063f489bd4b7efa5f1bfd, type: 3}

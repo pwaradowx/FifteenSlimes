@@ -29,9 +29,10 @@ namespace Project.Assets.FifteenPuzzle
                 Ray ray = _camera.ScreenPointToRay(touch.position);
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    if (!hit.collider.gameObject.CompareTag("Slime")) return;
+                    hit.collider.gameObject.TryGetComponent(out SlimeBehaviour slimeBehaviour);
+                    if (slimeBehaviour == null) return;
                     
-                    _currentSlime = hit.collider.gameObject.GetComponent<SlimeBehaviour>();
+                    _currentSlime = slimeBehaviour;
                     _clickedOnSlimeBefore = true;
                     
                     _startTouchPosition = touch.position;

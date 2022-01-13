@@ -121,6 +121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slimeobstacle
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f497b05a1f4f614596705c1ecb38999, type: 3}
 --- !u!4 &5746155449861895729 stripped
@@ -199,6 +203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: slime
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 405c877e38898224b9a5c3d7bafe8353, type: 3}
 --- !u!4 &5746155448252260548 stripped
@@ -264,6 +272,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a63e7ae58dc5c4a4fa06f2db4b93d450, type: 3}
       propertyPath: m_Name
       value: nineshape
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a63e7ae58dc5c4a4fa06f2db4b93d450, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a63e7ae58dc5c4a4fa06f2db4b93d450, type: 3}
@@ -342,6 +354,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed51b519279b7d0469c70046918161db, type: 3}
       propertyPath: m_Name
       value: slimeGlow1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed51b519279b7d0469c70046918161db, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed51b519279b7d0469c70046918161db, type: 3}
