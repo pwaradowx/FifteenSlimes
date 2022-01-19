@@ -12,7 +12,7 @@ namespace Project.Assets.FifteenPuzzle
         [Tooltip("Set here a number as on the slime model.")]
         [SerializeField] private int myNumber;
         public int MyNumber => myNumber;
-        
-        public Vector2 MyGridCoordinates { get; set; }
+        public Vector2 MyGridCoordinates;
+        public bool IsImMoving;
     }
 }

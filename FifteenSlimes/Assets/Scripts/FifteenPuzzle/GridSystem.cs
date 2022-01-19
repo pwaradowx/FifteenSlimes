@@ -7,73 +7,88 @@ namespace Project.Assets.FifteenPuzzle
 {
     public class GridSystem : MonoBehaviour
     {
-        [SerializeField] private bool createCheatGrid;
-        
         [SerializeField] private int side;
         [SerializeField] private float tileOffset;
 
         [SerializeField] private GameObject[] slimesPrefabs;
 
         [Tooltip("Add here a gameobject called Dynamic under the World gameobject to keep scene clean.")]
-        [SerializeField] private GameObject parent;
+        [SerializeField] private GameObject slimesParent;
+
+        [SerializeField] private bool createCheatGrid;
 
         private readonly List<int> _slimesIndexes = new List<int>();
         private SlimeBehaviour[,] _slimes;
         private GridTile[,] _gridTiles;
-        private bool[,] _isIFullArray;
         
-        public void TryToMoveSlime(Vector2 targetDirection, SlimeBehaviour slime)
+        private Vector3 _slimeTargetPosition;
+        private const float SlimeSpeed = 20f;
+        private int _freeX;
+        private int _freeY;
+
+        public void TryToMoveSlime(SlimeBehaviour slime)
         {
             int currentX = (int) slime.MyGridCoordinates.x;
             int currentY = (int) slime.MyGridCoordinates.y;
 
-            int targetX = (int) (currentX + targetDirection.x);
-            int targetY = (int) (currentY + targetDirection.y);
+            int deltaX = Mathf.Abs(currentX - _freeX);
+            int deltaY = Mathf.Abs(currentY - _freeY);
 
-            if (targetX < 0) targetX = 0;
-            if (targetY < 0) targetY = 0;
-            if (targetX > side - 1) targetX = side - 1;
-            if (targetY > side - 1) targetY = side - 1;
-            
-            if (!_isIFullArray[targetX, targetY])
+            if (deltaX == 1 && deltaY == 0)
             {
-                Vector3 targetPosition = new Vector3(targetX, targetY) * tileOffset;
-                StartCoroutine(LerpSlimeMovement(_slimes[currentX, currentY].gameObject.transform,
-                    _slimes[currentX, currentY].gameObject.transform.position, targetPosition,
-                    0.5f * Time.deltaTime));
+                int dir = currentX > _freeX ? -1 : 1;
 
-                _slimes[targetX, targetY] = _slimes[currentX, currentY];
+                _slimes[currentX + dir, currentY] = _slimes[currentX, currentY];
                 _slimes[currentX, currentY] = null;
+                slime.MyGridCoordinates = new Vector2(currentX + dir, currentY);
+                
+                _freeX = currentX;
+                
+                slime.IsImMoving = true;
+                _slimeTargetPosition = new Vector3((currentX + dir) * tileOffset, currentY * tileOffset, 0f);
+                StartCoroutine(MoveSlimeSmoothly(slime, _slimeTargetPosition, SlimeSpeed * Time.deltaTime));
+                
+                CheckVictory();
+            }
+            else if (deltaX == 0 && deltaY == 1)
+            {
+                int dir = currentY > _freeY ? -1 : 1;
 
-                _isIFullArray[targetX, targetY] = true;
-                _isIFullArray[currentX, currentY] = false;
+                _slimes[currentX, currentY + dir] = _slimes[currentX, currentY];
+                _slimes[currentX, currentY] = null;
+                slime.MyGridCoordinates = new Vector2(currentX, currentY + dir);
+                
+                _freeY = currentY;
 
-                slime.MyGridCoordinates = new Vector2(targetX, targetY);
-
-                if (CheckWinCondition())
-                {
-                    print("You win!");
-                }
+                slime.IsImMoving = true;
+                _slimeTargetPosition = new Vector3(currentX * tileOffset, (currentY + dir) * tileOffset, 0f);
+                StartCoroutine(MoveSlimeSmoothly(slime, _slimeTargetPosition, SlimeSpeed * Time.deltaTime));
+                
+                CheckVictory();
             }
             else
             {
-                print("I can't move slime to this position!");
+                print("Can not move slime!");
             }
         }
-
-        private IEnumerator LerpSlimeMovement(Transform toMove, Vector3 start, Vector3 end, float step)
+        
+        private IEnumerator MoveSlimeSmoothly(SlimeBehaviour slimeToMove, Vector3 goalPos, float speed)
         {
-            float startTime = Time.time;
-            while (Time.time < startTime + step)
+            while (slimeToMove.transform.position != goalPos)
             {
-                toMove.position = Vector3.Lerp(start, end, (Time.time - startTime)/step);
+                slimeToMove.transform.position = Vector3.Lerp(slimeToMove.transform.position, goalPos, speed);
+                if ((slimeToMove.transform.position - goalPos).magnitude <= 0.05f)
+                {
+                    slimeToMove.transform.position = goalPos;
+
+                    slimeToMove.IsImMoving = false;
+                }
+                
                 yield return null;
             }
-
-            toMove.position = end;
         }
 
-        private bool CheckWinCondition()
+        private void CheckVictory()
         {
             for (int y = side - 1; y >= 0; y--)
             {
@@ -83,20 +98,18 @@ namespace Project.Assets.FifteenPuzzle
                     {
                         if (_gridTiles[x, y].MyNumber != _slimes[x, y].MyNumber)
                         {
-                            return false;
+                            return;
                         }
                     }
                     else
                     {
                         if (x != side - 1 || y != 0)
                         {
-                            return false;
+                            return;
                         }
                     }
                 }
             }
-
-            return true;
         }
 
         private void Awake()
@@ -113,7 +126,6 @@ namespace Project.Assets.FifteenPuzzle
         {
             _slimes = new SlimeBehaviour[side, side];
             _gridTiles = new GridTile[side, side];
-            _isIFullArray = new bool[side, side];
 
             int emptyX = Random.Range(0, side - 1);
             int emptyY = Random.Range(0, side - 1);
@@ -138,12 +150,11 @@ namespace Project.Assets.FifteenPuzzle
                             {
                                 SpawnSlime(slimesPrefabs[slimeID], position);
                             }
-
-                            _isIFullArray[x, y] = true;
                         }
                         else
                         {
-                            _isIFullArray[x, y] = false;
+                            _freeX = x;
+                            _freeY = y;
                         }
                     }
                 }
@@ -153,28 +164,7 @@ namespace Project.Assets.FifteenPuzzle
                 CreateCheatedGrid(actualTileNumber);
             }
         }
-
-        private int GetRandomSlimeIndex()
-        {
-            if (_slimesIndexes.Count <= 0) return -1;
-
-            int newIndex = Random.Range(0, _slimesIndexes.Count - 1);
-            int indexToReturn = _slimesIndexes[newIndex];
-            _slimesIndexes.RemoveAt(newIndex);
-            return indexToReturn;
-        }
-
-        private void SpawnSlime(GameObject slimePrefab, Vector3 position)
-        {
-            GameObject slime = Instantiate(slimePrefab, position, Quaternion.identity);
-            slime.transform.parent = parent.transform;
-            
-            int x = (int) (position.x / tileOffset);
-            int y = (int) (position.y / tileOffset);
-            _slimes[x, y] = slime.GetComponent<SlimeBehaviour>();
-            _slimes[x, y].MyGridCoordinates = new Vector2(x, y);
-        }
-
+        
         private void CreateCheatedGrid(int actualTileNumber)
         {
             // Spawn tiles.
@@ -188,16 +178,14 @@ namespace Project.Assets.FifteenPuzzle
             }
 
             // Spawn first three lines.
-            int id = 0;
+            int slimeID = 0;
             for (int y = side - 1; y >= 1; y--)
             {
                 for (int x = 0; x < side; x++)
                 {
                     Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
-                        
-                    SpawnSlime(slimesPrefabs[id].gameObject, position);
-                    id++;
-                    _isIFullArray[x, y] = true;
+                    SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
+                    slimeID++;
                 }
             }
                 
@@ -206,12 +194,30 @@ namespace Project.Assets.FifteenPuzzle
             for (int x = 1; x < side; x++)
             {
                 Vector3 position = new Vector3(x * tileOffset, lastY * tileOffset, 0f);
-                SpawnSlime(slimesPrefabs[id].gameObject, position);
-                id++;
-                _isIFullArray[x, lastY] = true;
+                SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
+                slimeID++;
             }
+        }
 
-            _isIFullArray[0, 0] = false;
+        private int GetRandomSlimeIndex()
+        {
+            if (_slimesIndexes.Count <= 0) return -1;
+         
+            int newIndex = Random.Range(0, _slimesIndexes.Count - 1);
+            int indexToReturn = _slimesIndexes[newIndex];
+            _slimesIndexes.RemoveAt(newIndex);
+            return indexToReturn;
+        }
+
+        private void SpawnSlime(GameObject slimePrefab, Vector3 position)
+        {
+            GameObject slime = Instantiate(slimePrefab, position, Quaternion.identity);
+            slime.transform.parent = slimesParent.transform;
+            
+            int x = (int) (position.x / tileOffset);
+            int y = (int) (position.y / tileOffset);
+            _slimes[x, y] = slime.GetComponent<SlimeBehaviour>();
+            _slimes[x, y].MyGridCoordinates = new Vector2(x, y);
         }
     }
 }

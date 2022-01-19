@@ -687,7 +687,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34408a5374391dc4cb2ea66fb39bc576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createCheatGrid: 0
   side: 4
   tileOffset: 2.25
   slimesPrefabs:
@@ -706,7 +705,9 @@ MonoBehaviour:
   - {fileID: 9173435106368042642, guid: 87f77af021d08404a9dd9e1652b77ccd, type: 3}
   - {fileID: 4856893963132177653, guid: f4e134f79a56f1741ae2b032901e7324, type: 3}
   - {fileID: 1907994928657670075, guid: dba42377a19aa6349a23a96b8ee920a7, type: 3}
-  parent: {fileID: 531097750}
+  slimesParent: {fileID: 531097750}
+  createCheatGrid: 0
+  winLabel: {fileID: 0}
 --- !u!4 &1889668457
 Transform:
   m_ObjectHideFlags: 0
