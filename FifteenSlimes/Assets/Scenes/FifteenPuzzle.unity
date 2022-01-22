@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 469670467}
   - component: {fileID: 469670468}
   m_Layer: 0
-  m_Name: Background Color System
+  m_Name: Background Color
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 1108688360}
   - component: {fileID: 1108688359}
   m_Layer: 0
-  m_Name: Move Slimes System
+  m_Name: Touch Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +707,6 @@ MonoBehaviour:
   - {fileID: 1907994928657670075, guid: dba42377a19aa6349a23a96b8ee920a7, type: 3}
   slimesParent: {fileID: 531097750}
   createCheatGrid: 0
-  winLabel: {fileID: 0}
 --- !u!4 &1889668457
 Transform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Project.Assets.FifteenPuzzle
@@ -14,5 +15,29 @@ namespace Project.Assets.FifteenPuzzle
         public int MyNumber => myNumber;
         public Vector2 MyGridCoordinates;
         public bool IsImMoving;
+
+        private const float Speed = 20f;
+        
+        public void Move(Vector3 goalPos)
+        {
+            StartCoroutine(MoveSlimeModel(goalPos));
+        }
+        
+        private IEnumerator MoveSlimeModel(Vector3 goalPos)
+        {
+            while (transform.position != goalPos)
+            {
+                transform.position = 
+                    Vector3.Lerp(transform.position, goalPos, Speed * Time.deltaTime);
+                
+                if ((transform.position - goalPos).magnitude <= 0.05f)
+                {
+                    transform.position = goalPos;
+                    IsImMoving = false;
+                }
+                
+                yield return null;
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 namespace Project.Assets.FifteenPuzzle
 {
-    public class GridTile
+    public readonly struct GridTile
     {
         /// <summary>
         /// Represents the actual position of the tile inside of puzzle space.

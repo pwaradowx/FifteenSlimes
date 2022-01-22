@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -22,7 +21,6 @@ namespace Project.Assets.FifteenPuzzle
         private GridTile[,] _gridTiles;
         
         private Vector3 _slimeTargetPosition;
-        private const float SlimeSpeed = 20f;
         private int _freeX;
         private int _freeY;
 
@@ -46,8 +44,8 @@ namespace Project.Assets.FifteenPuzzle
                 
                 slime.IsImMoving = true;
                 _slimeTargetPosition = new Vector3((currentX + dir) * tileOffset, currentY * tileOffset, 0f);
-                StartCoroutine(MoveSlimeSmoothly(slime, _slimeTargetPosition, SlimeSpeed * Time.deltaTime));
-                
+                slime.Move(_slimeTargetPosition);
+
                 CheckVictory();
             }
             else if (deltaX == 0 && deltaY == 1)
@@ -62,29 +60,13 @@ namespace Project.Assets.FifteenPuzzle
 
                 slime.IsImMoving = true;
                 _slimeTargetPosition = new Vector3(currentX * tileOffset, (currentY + dir) * tileOffset, 0f);
-                StartCoroutine(MoveSlimeSmoothly(slime, _slimeTargetPosition, SlimeSpeed * Time.deltaTime));
-                
+                slime.Move(_slimeTargetPosition);
+
                 CheckVictory();
             }
             else
             {
                 print("Can not move slime!");
-            }
-        }
-        
-        private IEnumerator MoveSlimeSmoothly(SlimeBehaviour slimeToMove, Vector3 goalPos, float speed)
-        {
-            while (slimeToMove.transform.position != goalPos)
-            {
-                slimeToMove.transform.position = Vector3.Lerp(slimeToMove.transform.position, goalPos, speed);
-                if ((slimeToMove.transform.position - goalPos).magnitude <= 0.05f)
-                {
-                    slimeToMove.transform.position = goalPos;
-
-                    slimeToMove.IsImMoving = false;
-                }
-                
-                yield return null;
             }
         }
 
@@ -110,6 +92,8 @@ namespace Project.Assets.FifteenPuzzle
                     }
                 }
             }
+            
+            print("You win!");
         }
 
         private void Awake()

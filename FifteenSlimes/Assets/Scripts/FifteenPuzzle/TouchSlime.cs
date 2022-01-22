@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Project.Assets.FifteenPuzzle
 {
-    public class MoveSlimes : MonoBehaviour
+    public class TouchSlime : MonoBehaviour
     {
         [SerializeField] private GridSystem gridSystem;
 
