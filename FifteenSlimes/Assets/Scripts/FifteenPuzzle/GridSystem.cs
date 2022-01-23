@@ -42,7 +42,6 @@ namespace Project.Assets.FifteenPuzzle
                 
                 _freeX = currentX;
                 
-                slime.IsImMoving = true;
                 _slimeTargetPosition = new Vector3((currentX + dir) * tileOffset, currentY * tileOffset, 0f);
                 slime.Move(_slimeTargetPosition, RectTransform.Axis.Horizontal);
 
@@ -57,8 +56,7 @@ namespace Project.Assets.FifteenPuzzle
                 slime.MyGridCoordinates = new Vector2(currentX, currentY + dir);
                 
                 _freeY = currentY;
-
-                slime.IsImMoving = true;
+                
                 _slimeTargetPosition = new Vector3(currentX * tileOffset, (currentY + dir) * tileOffset, 0f);
                 slime.Move(_slimeTargetPosition, RectTransform.Axis.Vertical);
 

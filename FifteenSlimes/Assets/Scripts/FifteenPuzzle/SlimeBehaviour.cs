@@ -28,6 +28,8 @@ namespace Project.Assets.FifteenPuzzle
         
         public void Move(Vector3 goalPos, RectTransform.Axis axis)
         {
+            IsImMoving = true;
+            
             StartCoroutine(MoveSlimeModel(goalPos, axis));
 
             if (_squashCoroutine != null)
@@ -48,7 +50,6 @@ namespace Project.Assets.FifteenPuzzle
                 if ((transform.position - goalPos).magnitude <= 0.05f)
                 {
                     transform.position = goalPos;
-                    IsImMoving = false;
 
                     body.transform.localScale = _normalScale;
                     _squashCoroutine = StartCoroutine(Squash(axis));
@@ -121,6 +122,8 @@ namespace Project.Assets.FifteenPuzzle
                         body.transform.localScale = _normalScale;
 
                         _isSquashDone = true;
+
+                        IsImMoving = false;
                     }
                     
                     yield return null;
