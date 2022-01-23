@@ -1,49 +1,46 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BackgroundColor : MonoBehaviour
+namespace Project.Assets.FifteenPuzzle
 {
-    [SerializeField] private Color[] colors;
-
-    private readonly List<int> _availableColorIDs = new List<int>();
-    private int _currentColorID;
-
-    private const string UnavailableIDKey = "LastBackgroundColorID";
-
-    private Camera _camera;
-
-    private void Awake()
+    public class BackgroundColor : MonoBehaviour
     {
-        _camera = Camera.main;
+        [SerializeField] private Color[] colors;
 
-        for (int i = 0; i < colors.Length; i++)
+        private int _currentColorID;
+
+        private const string UnavailableIDKey = "LastBackgroundColorID";
+
+        private Camera _camera;
+
+        private void Awake()
         {
-            _availableColorIDs.Add(i);
+            _camera = Camera.main;
+
+            int unavailableID = PlayerPrefs.GetInt(UnavailableIDKey);
+            int[] except = {unavailableID};
+
+            _currentColorID = RandomExcept(colors.Length, except);
+            _camera.backgroundColor = colors[_currentColorID];
         }
 
-        int unavailableID = PlayerPrefs.GetInt(UnavailableIDKey);
-        int[] except = {unavailableID};
-
-        _currentColorID = RandomExcept(colors.Length, except);
-        _camera.backgroundColor = colors[_currentColorID];
-    }
-    
-    private int RandomExcept(int max, int[] except)
-    {
-        int result = Random.Range(0, max - except.Length);
-
-        for (int i = 0; i < except.Length; i++) 
+        private int RandomExcept(int max, int[] except)
         {
-            if (result < except[i])
-                return result;
-            result++;
-        }
-        return result;
-    }
+            int result = Random.Range(0, max - except.Length);
 
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        PlayerPrefs.SetInt(UnavailableIDKey, _currentColorID);
+            for (int i = 0; i < except.Length; i++)
+            {
+                if (result < except[i])
+                    return result;
+                result++;
+            }
+
+            return result;
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            PlayerPrefs.SetInt(UnavailableIDKey, _currentColorID);
+        }
     }
 }
