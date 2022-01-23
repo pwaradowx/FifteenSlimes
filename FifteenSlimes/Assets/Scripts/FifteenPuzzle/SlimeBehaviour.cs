@@ -19,6 +19,7 @@ namespace Project.Assets.FifteenPuzzle
 
         private const float MoveSpeed = 20f;
 
+        private bool _isSquashDone;
         private Coroutine _squashCoroutine;
         private const float SquashSpeed = 20f;
         private readonly Vector3 _normalScale = new Vector3(1f, 1f, 1f);
@@ -28,8 +29,12 @@ namespace Project.Assets.FifteenPuzzle
         public void Move(Vector3 goalPos, RectTransform.Axis axis)
         {
             StartCoroutine(MoveSlimeModel(goalPos, axis));
-            
-            if (_squashCoroutine != null) StopCoroutine(_squashCoroutine);
+
+            if (_squashCoroutine != null)
+            {
+                StopCoroutine(_squashCoroutine);
+                _isSquashDone = true;
+            }
         }
         
         private IEnumerator MoveSlimeModel(Vector3 goalPos, RectTransform.Axis axis)
@@ -71,48 +76,55 @@ namespace Project.Assets.FifteenPuzzle
 
         private IEnumerator Squash(RectTransform.Axis axis)
         {
-            if (axis == RectTransform.Axis.Horizontal)
+            _isSquashDone = false;
+
+            while (!_isSquashDone)
             {
-                while (body.transform.localScale != _minScaleX)
+                if (axis == RectTransform.Axis.Horizontal)
                 {
-                    body.transform.localScale = 
-                        Vector3.Lerp(body.transform.localScale, _minScaleX, Time.deltaTime * SquashSpeed);
-
-                    if ((body.transform.localScale - _minScaleX).magnitude <= 0.05f)
+                    while (body.transform.localScale != _minScaleX)
                     {
-                        body.transform.localScale = _minScaleX;
-                    }
+                        body.transform.localScale = 
+                            Vector3.Lerp(body.transform.localScale, _minScaleX, Time.deltaTime * SquashSpeed);
 
-                    yield return null;
+                        if ((body.transform.localScale - _minScaleX).magnitude <= 0.05f)
+                        {
+                            body.transform.localScale = _minScaleX;
+                        }
+
+                        yield return null;
+                    }
                 }
-            }
-            else if (axis == RectTransform.Axis.Vertical)
-            {
-                while (body.transform.localScale != _minScaleY)
+                else if (axis == RectTransform.Axis.Vertical)
                 {
-                    body.transform.localScale = 
-                        Vector3.Lerp(body.transform.localScale, _minScaleY, Time.deltaTime * SquashSpeed);
-
-                    if ((body.transform.localScale - _minScaleY).magnitude <= 0.05f)
+                    while (body.transform.localScale != _minScaleY)
                     {
-                        body.transform.localScale = _minScaleY;
-                    }
+                        body.transform.localScale = 
+                            Vector3.Lerp(body.transform.localScale, _minScaleY, Time.deltaTime * SquashSpeed);
 
-                    yield return null;
+                        if ((body.transform.localScale - _minScaleY).magnitude <= 0.05f)
+                        {
+                            body.transform.localScale = _minScaleY;
+                        }
+
+                        yield return null;
+                    }
                 }
-            }
             
-            while (body.transform.localScale != _normalScale)
-            {
-                body.transform.localScale = 
-                    Vector3.Lerp(body.transform.localScale, _normalScale, Time.deltaTime * SquashSpeed);
-
-                if ((body.transform.localScale - _normalScale).magnitude <= 0.05f)
+                while (body.transform.localScale != _normalScale)
                 {
-                    body.transform.localScale = _normalScale;
-                }
+                    body.transform.localScale = 
+                        Vector3.Lerp(body.transform.localScale, _normalScale, Time.deltaTime * SquashSpeed);
+
+                    if ((body.transform.localScale - _normalScale).magnitude <= 0.05f)
+                    {
+                        body.transform.localScale = _normalScale;
+
+                        _isSquashDone = true;
+                    }
                     
-                yield return null;
+                    yield return null;
+                }
             }
         }
     }
