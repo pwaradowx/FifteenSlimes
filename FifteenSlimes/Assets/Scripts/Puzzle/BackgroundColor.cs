@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Project.Assets.FifteenPuzzle
+namespace Project.Assets.Puzzle
 {
     public class BackgroundColor : MonoBehaviour
     {

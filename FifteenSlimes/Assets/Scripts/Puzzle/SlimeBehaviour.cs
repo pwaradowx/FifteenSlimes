@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Project.Assets.FifteenPuzzle
+namespace Project.Assets.Puzzle
 {
     [RequireComponent(typeof(BoxCollider))]
     public class SlimeBehaviour : MonoBehaviour

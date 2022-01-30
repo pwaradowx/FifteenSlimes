@@ -1,4 +1,4 @@
-namespace Project.Assets.FifteenPuzzle
+namespace Project.Assets.Puzzle
 {
     public readonly struct GridTile
     {

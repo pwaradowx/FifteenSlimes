@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Assets.FifteenPuzzle
+namespace Project.Assets.Puzzle
 {
     public class TouchSlime : MonoBehaviour
     {
