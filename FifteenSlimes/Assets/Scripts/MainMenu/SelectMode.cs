@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ namespace Project.Assets.MainMenu
 
         private readonly Color ChekedColor = new Color(255f, 255f, 255f, 1f);
         private readonly Color UnchekedColor = new Color(255f, 255f, 255f, 0.3f);
+
+        private const string PreviousPuzzleModeKey = "PreviouesPuzzleMode";
 
         public enum Mode
         {
@@ -32,6 +35,8 @@ namespace Project.Assets.MainMenu
         {
             // Set EightPuzzle mode by default.
             OnModeChanged(Mode.EightPuzzle);
+            
+            OnModeChanged((Mode) PlayerPrefs.GetInt(PreviousPuzzleModeKey));
         }
 
         private void OnModeChanged(Mode newMode)
@@ -50,6 +55,11 @@ namespace Project.Assets.MainMenu
 
                 eightPuzzleButton.color = UnchekedColor;
             }
+        }
+
+        private void OnDestroy()
+        {
+            PlayerPrefs.SetInt(PreviousPuzzleModeKey, (int) CurrentMode);
         }
     }
 }
