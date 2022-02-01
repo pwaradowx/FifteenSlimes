@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BackButton : MonoBehaviour
+namespace Project.Assets.Puzzle
 {
-    public void GoToMainMenu()
+    public class BackButton : MonoBehaviour
     {
-        SceneManager.LoadScene(0);
+        public void GoToMainMenu()
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

@@ -1,27 +1,41 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Project.Assets.Puzzle
+namespace Project.Assets.Managers
 {
     public class BackgroundColor : MonoBehaviour
     {
+        public static BackgroundColor Instance;
+
+        public Color ColorToReceive;
+        
         [SerializeField] private Color[] colors;
 
         private int _currentColorID;
 
         private const string UnavailableIDKey = "LastBackgroundColorID";
 
-        private Camera _camera;
-
         private void Awake()
         {
-            _camera = Camera.main;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            
+            DontDestroyOnLoad(gameObject);
 
+            Instantiate();
+        }
+
+        private void Instantiate()
+        {
             int unavailableID = PlayerPrefs.GetInt(UnavailableIDKey);
             int[] except = {unavailableID};
 
             _currentColorID = RandomExcept(colors.Length, except);
-            _camera.backgroundColor = colors[_currentColorID];
+            ColorToReceive = colors[_currentColorID];
         }
 
         private int RandomExcept(int max, int[] except)

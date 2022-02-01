@@ -1,0 +1,16 @@
+{
+    "name": "Project.Assets.Other",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8917faa6f88c7eb469aeff1836235dcb"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
