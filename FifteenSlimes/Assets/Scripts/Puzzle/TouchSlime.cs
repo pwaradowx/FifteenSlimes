@@ -5,12 +5,17 @@ namespace Project.Assets.Puzzle
     public class TouchSlime : MonoBehaviour
     {
         [SerializeField] private GridSystem gridSystem;
+        [SerializeField] private Stopwatch stopwatch;
 
         private Camera _camera;
+
+        private bool _firstTouchWasYet;
 
         private void Start()
         {
             _camera = Camera.main;
+
+            _firstTouchWasYet = false;
         }
         
         private void Update()
@@ -26,6 +31,13 @@ namespace Project.Assets.Puzzle
                     hit.collider.gameObject.TryGetComponent(out SlimeBehaviour slimeBehaviour);
                     
                     if (slimeBehaviour == null) return;
+
+                    if (!_firstTouchWasYet)
+                    {
+                        stopwatch.StartStopwatch();
+                        _firstTouchWasYet = true;
+                    }
+
                     if (slimeBehaviour.IsImMoving) return;
                     
                     gridSystem.TryToMoveSlime(slimeBehaviour);

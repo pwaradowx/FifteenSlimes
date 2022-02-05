@@ -16,6 +16,8 @@ namespace Project.Assets.Puzzle
 
         [SerializeField] private bool createCheatGrid;
 
+        [SerializeField] private Stopwatch stopwatch;
+
         private readonly List<int> _slimesIndexes = new List<int>();
         private SlimeBehaviour[,] _slimes;
         private GridTile[,] _gridTiles;
@@ -91,6 +93,7 @@ namespace Project.Assets.Puzzle
                 }
             }
             
+            stopwatch.StopStopwatch();
             print("You win!");
         }
 
