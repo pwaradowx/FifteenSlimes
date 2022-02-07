@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Project.Assets.Managers;
 
 namespace Project.Assets.MainMenu
 {
@@ -7,8 +9,14 @@ namespace Project.Assets.MainMenu
     {
         [SerializeField] private SelectMode selectMode;
         
-        public void StartPuzzle()
+        public async void StartPuzzle()
         {
+            if (!TransitionManager.Instance.IsTransitionDone) return;
+            
+            TransitionManager.Instance.TransitionIn();
+
+            await Task.Delay(TransitionManager.Instance.TransitionTime);
+            
             SceneManager.LoadScene((int) selectMode.CurrentMode);
         }
     }

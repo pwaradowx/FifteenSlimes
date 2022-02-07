@@ -13,7 +13,7 @@ namespace Project.Assets.Puzzle
         
         private bool _stopwatchIsActive;
 
-        private float _currentMilisec;
+        private float _currentMillisec;
         private int _currentSec;
         private int _currentMin;
         private int _currentHour;
@@ -79,11 +79,11 @@ namespace Project.Assets.Puzzle
 
         private void CurrentTimeLogic()
         {
-            _currentMilisec += 0.02f;
+            _currentMillisec += 0.02f;
 
-            if (_currentMilisec >= 1f)
+            if (_currentMillisec >= 1f)
             {
-                _currentMilisec = 0f;
+                _currentMillisec = 0f;
                 _currentSec++;
             }
 

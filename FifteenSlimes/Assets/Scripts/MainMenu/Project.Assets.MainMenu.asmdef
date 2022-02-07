@@ -1,7 +1,9 @@
 {
     "name": "Project.Assets.MainMenu",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:8917faa6f88c7eb469aeff1836235dcb"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -7,7 +7,7 @@ namespace Project.Assets.Managers
     {
         public static BackgroundColor Instance;
 
-        public Color ColorToReceive;
+        public Color ColorToReceive { get; private set; }
         
         [SerializeField] private Color[] colors;
 
@@ -26,10 +26,10 @@ namespace Project.Assets.Managers
             
             DontDestroyOnLoad(gameObject);
 
-            Instantiate();
+            Setup();
         }
 
-        private void Instantiate()
+        private void Setup()
         {
             int unavailableID = PlayerPrefs.GetInt(UnavailableIDKey);
             int[] except = {unavailableID};
