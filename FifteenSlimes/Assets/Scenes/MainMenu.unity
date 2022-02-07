@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 484782943}
   - component: {fileID: 484782944}
   m_Layer: 0
-  m_Name: Puzzle Mode Selection
+  m_Name: Select Puzzle Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -331,8 +331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1742355be4db5349bb3cc90591e1f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eightPuzzleButton: {fileID: 494408227}
-  fifteenPuzzleButton: {fileID: 1759367094}
+  ModesButtons:
+  - {fileID: 494408230}
+  - {fileID: 1759367097}
   CurrentMode: 1
 --- !u!1 &494408225
 GameObject:
@@ -345,9 +346,9 @@ GameObject:
   - component: {fileID: 494408226}
   - component: {fileID: 494408228}
   - component: {fileID: 494408227}
-  - component: {fileID: 494408229}
+  - component: {fileID: 494408230}
   m_Layer: 0
-  m_Name: 3x3 Button
+  m_Name: Eight Mode Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,7 +408,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494408225}
   m_CullTransparentMesh: 1
---- !u!114 &494408229
+--- !u!114 &494408230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -416,26 +417,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 494408225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a128e9464e30724c9f80ae7890317c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 484782944}
-          m_TargetAssemblyTypeName: Project.Assets.MainMenu.SelectMode, Project.Assets.MainMenu
-          m_MethodName: SelectEightPuzzle
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  selectMode: {fileID: 484782944}
+  modeToSwitch: 1
 --- !u!1 &510079993
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +929,6 @@ GameObject:
   - component: {fileID: 1749120705}
   - component: {fileID: 1749120704}
   - component: {fileID: 1749120706}
-  - component: {fileID: 1749120707}
   m_Layer: 0
   m_Name: Play Button
   m_TagString: Untagged
@@ -1018,35 +1003,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectMode: {fileID: 484782944}
---- !u!114 &1749120707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749120702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1749120706}
-          m_TargetAssemblyTypeName: Project.Assets.MainMenu.PlayButton, Project.Assets.MainMenu
-          m_MethodName: StartPuzzle
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1759367092
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,9 +1014,9 @@ GameObject:
   - component: {fileID: 1759367093}
   - component: {fileID: 1759367095}
   - component: {fileID: 1759367094}
-  - component: {fileID: 1759367096}
+  - component: {fileID: 1759367097}
   m_Layer: 0
-  m_Name: 4x4 Button
+  m_Name: Fifteen Mode Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1120,7 +1076,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759367092}
   m_CullTransparentMesh: 1
---- !u!114 &1759367096
+--- !u!114 &1759367097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1129,26 +1085,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1759367092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a128e9464e30724c9f80ae7890317c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 484782944}
-          m_TargetAssemblyTypeName: Project.Assets.MainMenu.SelectMode, Project.Assets.MainMenu
-          m_MethodName: SelectFifteenPuzzle
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  selectMode: {fileID: 484782944}
+  modeToSwitch: 2
 --- !u!1 &1972790568
 GameObject:
   m_ObjectHideFlags: 0
