@@ -8,7 +8,7 @@ namespace Project.Assets.Other
     {
         private void Start()
         {
-            GetComponent<Camera>().backgroundColor = BackgroundColor.Instance.ColorToReceive;
+            GetComponent<Camera>().backgroundColor = BackgroundColor.Instance.BackColor;
         }
     }
 }

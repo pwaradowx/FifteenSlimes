@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Project.Assets.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,8 +16,6 @@ namespace Project.Assets.Puzzle
         [SerializeField] private GameObject slimesParent;
 
         [SerializeField] private bool createCheatGrid;
-
-        [SerializeField] private Stopwatch stopwatch;
 
         private readonly List<int> _slimesIndexes = new List<int>();
         private SlimeBehaviour[,] _slimes;
@@ -93,7 +92,7 @@ namespace Project.Assets.Puzzle
                 }
             }
             
-            stopwatch.StopStopwatch();
+            EventManager.Instance.OnPlayerSolvedPuzzle();
             print("You win!");
         }
 

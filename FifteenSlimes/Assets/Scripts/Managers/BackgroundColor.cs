@@ -7,7 +7,7 @@ namespace Project.Assets.Managers
     {
         public static BackgroundColor Instance;
 
-        public Color ColorToReceive { get; private set; }
+        public Color BackColor { get; private set; }
         
         [SerializeField] private Color[] colors;
 
@@ -35,7 +35,7 @@ namespace Project.Assets.Managers
             int[] except = {unavailableID};
 
             _currentColorID = RandomExcept(colors.Length, except);
-            ColorToReceive = colors[_currentColorID];
+            BackColor = colors[_currentColorID];
         }
 
         private int RandomExcept(int max, int[] except)

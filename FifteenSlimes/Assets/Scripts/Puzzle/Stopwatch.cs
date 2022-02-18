@@ -1,5 +1,6 @@
 using System.IO;
 using Project.Assets.MainMenu;
+using Project.Assets.Managers;
 using UnityEngine;
 using TMPro;
 
@@ -7,7 +8,7 @@ namespace Project.Assets.Puzzle
 {
     public class Stopwatch : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI currentTimeHandler;
+        [SerializeField] private TextMeshProUGUI currentTimeHolder;
 
         [SerializeField] private SelectMode.Mode mode;
         
@@ -27,11 +28,14 @@ namespace Project.Assets.Puzzle
             _stopwatchIsActive = true;
         }
 
-        public void StopStopwatch()
+        public (int, int, int) GetCurrentTime()
         {
-            _stopwatchIsActive = false;
-            
-            BestTimeLogic();
+            return (_currentHour, _currentMin, _currentSec);
+        }
+
+        public (int, int, int) GetBestTime()
+        {
+            return (_bestHour, _bestMin, _bestSec);
         }
 
         private void Start()
@@ -52,6 +56,8 @@ namespace Project.Assets.Puzzle
                 _bestMin = data.FifteenPuzzleBestMin;
                 _bestHour = data.FifteenPuzzleBestHour;
             }
+
+            EventManager.Instance.PlayerSolvedPuzzleEvent += StopStopwatch;
         }
 
         private StopwatchData LoadStopwatchData()
@@ -99,7 +105,14 @@ namespace Project.Assets.Puzzle
                 _currentHour++;
             }
 
-            currentTimeHandler.text = $"{_currentHour}h:{_currentMin}m:{_currentSec}s";
+            currentTimeHolder.text = $"{_currentHour}h:{_currentMin}m:{_currentSec}s";
+        }
+        
+        private void StopStopwatch()
+        {
+            _stopwatchIsActive = false;
+            
+            BestTimeLogic();
         }
 
         private void BestTimeLogic()
