@@ -33,39 +33,73 @@ namespace Project.Assets.Puzzle
             int deltaX = Mathf.Abs(currentX - _freeX);
             int deltaY = Mathf.Abs(currentY - _freeY);
 
-            if (deltaX == 1 && deltaY == 0)
+            if (deltaY == 0 && deltaX > 0)
             {
                 int dir = currentX > _freeX ? -1 : 1;
 
-                _slimes[currentX + dir, currentY] = _slimes[currentX, currentY];
+                if (dir == 1)
+                {
+                    for (int i = _freeX - 1; i >= currentX; i--)
+                    {
+                        _slimes[i + dir, currentY] = _slimes[i, currentY];
+                        _slimes[i + dir, currentY].MyGridCoordinates = new Vector2(i + dir, currentY);
+                        
+                        _slimeTargetPosition = new Vector3((i + dir) * tileOffset, currentY * tileOffset, 0f);
+                        _slimes[i + dir, currentY].Move(_slimeTargetPosition, RectTransform.Axis.Horizontal);
+                    }
+                }
+                else
+                {
+                    for (int i = _freeX + 1; i <= currentX; i++)
+                    {
+                        _slimes[i + dir, currentY] = _slimes[i, currentY];
+                        _slimes[i + dir, currentY].MyGridCoordinates = new Vector2(i + dir, currentY);
+                        
+                        _slimeTargetPosition = new Vector3((i + dir) * tileOffset, currentY * tileOffset, 0f);
+                        _slimes[i + dir, currentY].Move(_slimeTargetPosition, RectTransform.Axis.Horizontal);
+                    }
+                }
+
                 _slimes[currentX, currentY] = null;
-                slime.MyGridCoordinates = new Vector2(currentX + dir, currentY);
-                
                 _freeX = currentX;
                 
-                _slimeTargetPosition = new Vector3((currentX + dir) * tileOffset, currentY * tileOffset, 0f);
-                slime.Move(_slimeTargetPosition, RectTransform.Axis.Horizontal);
-
                 CheckVictory();
             }
-            else if (deltaX == 0 && deltaY == 1)
+            else if (deltaX == 0 && deltaY > 0)
             {
                 int dir = currentY > _freeY ? -1 : 1;
 
-                _slimes[currentX, currentY + dir] = _slimes[currentX, currentY];
-                _slimes[currentX, currentY] = null;
-                slime.MyGridCoordinates = new Vector2(currentX, currentY + dir);
+                if (dir == 1)
+                {
+                    for (int i = _freeY - 1; i >= currentY; i--)
+                    {
+                        _slimes[currentX, i + dir] = _slimes[currentX, i];
+                        _slimes[currentX, i + dir].MyGridCoordinates = new Vector2(currentX, i + dir);
+                        
+                        _slimeTargetPosition = new Vector3(currentX * tileOffset, (i + dir) * tileOffset, 0f);
+                        _slimes[currentX, i + dir].Move(_slimeTargetPosition, RectTransform.Axis.Vertical);
+                    }
+                }
+                else
+                {
+                    for (int i = _freeY + 1; i <= currentY; i++)
+                    {
+                        _slimes[currentX, i + dir] = _slimes[currentX, i];
+                        _slimes[currentX, i + dir].MyGridCoordinates = new Vector2(currentX, i + dir);
+                        
+                        _slimeTargetPosition = new Vector3(currentX * tileOffset, (i + dir) * tileOffset, 0f);
+                        _slimes[currentX, i + dir].Move(_slimeTargetPosition, RectTransform.Axis.Vertical);
+                    }
+                }
                 
+                _slimes[currentX, currentY] = null;
                 _freeY = currentY;
                 
-                _slimeTargetPosition = new Vector3(currentX * tileOffset, (currentY + dir) * tileOffset, 0f);
-                slime.Move(_slimeTargetPosition, RectTransform.Axis.Vertical);
-
                 CheckVictory();
             }
             else
             {
-                print("Can not move slime!");
+                print("Can not move slimes!");
             }
         }
 
