@@ -70,11 +70,8 @@ namespace Project.Assets.Puzzle
                 {
                     currentAlpha = targetAlpha;
 
-                    if (timeHolder != null)
-                    {
-                        timeHolder.gameObject.SetActive(false);
-                    }
-                    backButton.gameObject.SetActive(false);
+                    if (timeHolder != null) timeHolder.gameObject.SetActive(false);
+                    if (backButton != null) backButton.gameObject.SetActive(false);
                 }
 
                 timeHolder.alpha = currentAlpha;
@@ -111,29 +108,29 @@ namespace Project.Assets.Puzzle
 
         private async Task ShowMenuElements()
         {
-            victoryText.SetActive(true);
+            if (victoryText != null) victoryText.SetActive(true);
             await Task.Delay(1000);
             
-            currentTimeLabel.SetActive(true);
+            if (currentTimeLabel != null) currentTimeLabel.SetActive(true);
             await Task.Delay(1000);
             
             var currentTime = stopwatch.GetCurrentTime();
-            currentTimeHolder.gameObject.SetActive(true);
+            if (currentTimeHolder != null) currentTimeHolder.gameObject.SetActive(true);
             currentTimeHolder.text = $"{currentTime.Item1}h:{currentTime.Item2}m:{currentTime.Item3}s";
             await Task.Delay(1000);
             
-            bestTimeLabel.SetActive(true);
+            if (bestTimeLabel != null) bestTimeLabel.SetActive(true);
             await Task.Delay(1000);
 
             var bestTime = stopwatch.GetBestTime();
-            bestTimeHolder.gameObject.SetActive(true);
+            if (bestTimeHolder != null) bestTimeHolder.gameObject.SetActive(true);
             bestTimeHolder.text = $"{bestTime.Item1}h:{bestTime.Item2}m:{bestTime.Item3}s";
             await Task.Delay(1000);
 
-            replayButton.SetActive(true);
+            if (replayButton != null) replayButton.SetActive(true);
             await Task.Delay(1000);
 
-            menuButton.SetActive(true);
+            if (menuButton != null) menuButton.SetActive(true);
         }
 
         private void OnDestroy()

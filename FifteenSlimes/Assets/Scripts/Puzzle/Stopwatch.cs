@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading.Tasks;
 using Project.Assets.MainMenu;
 using Project.Assets.Managers;
 using UnityEngine;
@@ -19,9 +20,13 @@ namespace Project.Assets.Puzzle
         private int _currentMin;
         private int _currentHour;
         
-        private int _bestSec;
-        private int _bestMin;
-        private int _bestHour;
+        private int _eightPuzzleBestSec;
+        private int _eightPuzzleBestMin;
+        private int _eightPuzzleBestHour;
+        
+        private int _fifteenPuzzleBestSec;
+        private int _fifteenPuzzleBestMin;
+        private int _fifteenPuzzleBestHour;
 
         public void StartStopwatch()
         {
@@ -33,9 +38,20 @@ namespace Project.Assets.Puzzle
             return (_currentHour, _currentMin, _currentSec);
         }
 
-        public (int, int, int) GetBestTime()
+        public (int?, int?, int?) GetBestTime()
         {
-            return (_bestHour, _bestMin, _bestSec);
+            if (mode == SelectMode.Mode.EightPuzzle)
+            {
+                return (_eightPuzzleBestHour, _eightPuzzleBestMin, _eightPuzzleBestSec);
+            }
+            else if (mode == SelectMode.Mode.FifteenPuzzle)
+            {
+                return (_fifteenPuzzleBestHour, _fifteenPuzzleBestMin, _fifteenPuzzleBestSec);
+            }
+            else
+            {
+                return (null, null, null);
+            }
         }
 
         private void Start()
@@ -44,20 +60,15 @@ namespace Project.Assets.Puzzle
             
             if (data == null) return;
             
-            if (mode == SelectMode.Mode.EightPuzzle)
-            {
-                _bestSec = data.EightPuzzleBestSec;
-                _bestMin = data.EightPuzzleBestMin;
-                _bestHour = data.EightPuzzleBestHour;
-            }
-            else if (mode == SelectMode.Mode.FifteenPuzzle)
-            {
-                _bestSec = data.FifteenPuzzleBestSec;
-                _bestMin = data.FifteenPuzzleBestMin;
-                _bestHour = data.FifteenPuzzleBestHour;
-            }
+            _eightPuzzleBestSec = data.EightPuzzleBestSec;
+            _eightPuzzleBestMin = data.EightPuzzleBestMin;
+            _eightPuzzleBestHour = data.EightPuzzleBestHour;
+            
+            _fifteenPuzzleBestSec = data.FifteenPuzzleBestSec;
+            _fifteenPuzzleBestMin = data.FifteenPuzzleBestMin;
+            _fifteenPuzzleBestHour = data.FifteenPuzzleBestHour;
 
-            EventManager.Instance.PlayerSolvedPuzzleEvent += StopStopwatch;
+            EventManager.Instance.PlayerSolvedPuzzleEvent += OnPlayerSolvedPuzzle;
         }
 
         private StopwatchData LoadStopwatchData()
@@ -107,63 +118,97 @@ namespace Project.Assets.Puzzle
 
             currentTimeHolder.text = $"{_currentHour}h:{_currentMin}m:{_currentSec}s";
         }
+
+        private async void OnPlayerSolvedPuzzle()
+        {
+            await StopStopwatch();
+            
+            SaveStopwatchData(_eightPuzzleBestSec, _eightPuzzleBestMin, _eightPuzzleBestHour,
+                _fifteenPuzzleBestSec, _fifteenPuzzleBestMin, _fifteenPuzzleBestHour);
+        }
         
-        private void StopStopwatch()
+        private async Task StopStopwatch()
         {
             _stopwatchIsActive = false;
             
             BestTimeLogic();
+
+            await Task.CompletedTask;
         }
 
         private void BestTimeLogic()
         {
-            // If best time was changed already because as minimum one value is not equals to 0,
-            // So change best time only if it less or equals to current time by further logic. 
-            if (_bestSec != 0 || _bestMin != 0 || _bestHour != 0)
+            if (mode == SelectMode.Mode.EightPuzzle)
             {
-                if (_currentHour <= _bestHour)
+                // If best time was changed already because as minimum one value is not equals to 0,
+                // So change best time only if it less or equals to current time by further logic. 
+                if (_eightPuzzleBestSec != 0 || _eightPuzzleBestMin != 0 || _eightPuzzleBestHour != 0)
                 {
-                    _bestHour = _currentHour;
-
-                    if (_currentMin <= _bestMin)
+                    if (_currentHour <= _eightPuzzleBestHour)
                     {
-                        _bestMin = _currentMin;
+                        _eightPuzzleBestHour = _currentHour;
 
-                        if (_currentSec <= _bestSec)
+                        if (_currentMin <= _eightPuzzleBestMin)
                         {
-                            _bestSec = _currentSec;
+                            _eightPuzzleBestMin = _currentMin;
+
+                            if (_currentSec <= _eightPuzzleBestSec)
+                            {
+                                _eightPuzzleBestSec = _currentSec;
+                            }
                         }
                     }
                 }
+                // Else means all values are equal to 0,
+                // So it means it's player's first win
+                // And we need just to save the current time values to best time values.
+                else
+                {
+                    _eightPuzzleBestHour = _currentHour;
+                    _eightPuzzleBestMin = _currentMin;
+                    _eightPuzzleBestSec = _currentSec;
+                }
             }
-            // Else means all values are equal to 0,
-            // So it means it's player's first win
-            // And we need just to save the current time values to best time values.
-            else
+            else if (mode == SelectMode.Mode.FifteenPuzzle)
             {
-                _bestHour = _currentHour;
-                _bestMin = _currentMin;
-                _bestSec = _currentSec;
+                if (_fifteenPuzzleBestSec != 0 || _fifteenPuzzleBestMin != 0 || _fifteenPuzzleBestHour != 0)
+                {
+                    if (_currentHour <= _fifteenPuzzleBestHour)
+                    {
+                        _fifteenPuzzleBestHour = _currentHour;
+
+                        if (_currentMin <= _fifteenPuzzleBestMin)
+                        {
+                            _fifteenPuzzleBestMin = _currentMin;
+
+                            if (_currentSec <= _fifteenPuzzleBestSec)
+                            {
+                                _fifteenPuzzleBestSec = _currentSec;
+                            }
+                        }
+                    }
+                }
+                // Else means all values are equal to 0,
+                // So it means it's player's first win
+                // And we need just to save the current time values to best time values.
+                else
+                {
+                    _fifteenPuzzleBestHour = _currentHour;
+                    _fifteenPuzzleBestMin = _currentMin;
+                    _fifteenPuzzleBestSec = _currentSec;
+                }
             }
         }
 
-        private void SaveStopwatchData(int bestSec, int bestMin, int bestHour)
+        private void SaveStopwatchData(int eightSec, int eightMin, int eightHour, int fifteenSec, int fifteenMin,
+            int fifteenHour)
         {
-            StopwatchData data = new StopwatchData(bestSec, bestMin, bestHour, mode);
+            StopwatchData data = new StopwatchData(eightSec, eightMin, eightHour,
+                fifteenSec, fifteenMin, fifteenHour);
 
             string stringJson = JsonUtility.ToJson(data);
             string pathToData = Application.persistentDataPath + "/StopwatchData.txt";
             File.WriteAllText(pathToData, stringJson);
-        }
-
-        private void OnDestroy()
-        {
-            SaveStopwatchData(_bestSec, _bestMin, _bestHour);
-        }
-
-        private void OnApplicationPause(bool pauseStatus)
-        {
-            OnDestroy();
         }
     }
 }

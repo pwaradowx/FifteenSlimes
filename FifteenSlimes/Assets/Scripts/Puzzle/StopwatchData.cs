@@ -1,5 +1,3 @@
-using Project.Assets.MainMenu;
-
 namespace Project.Assets.Puzzle
 {
     public class StopwatchData
@@ -12,20 +10,16 @@ namespace Project.Assets.Puzzle
         public int FifteenPuzzleBestMin;
         public int FifteenPuzzleBestHour;
 
-        public StopwatchData(int bestSec, int bestMin, int bestHour, SelectMode.Mode mode)
+        public StopwatchData(int eightPuzzleBestSec, int eightPuzzleBestMin, int eightPuzzleBestHour, 
+            int fifteenPuzzleBestSec, int fifteenPuzzleBestMin, int fifteenPuzzleBestHour)
         {
-            if (mode == SelectMode.Mode.EightPuzzle)
-            {
-                EightPuzzleBestSec = bestSec;
-                EightPuzzleBestMin = bestMin;
-                EightPuzzleBestHour = bestHour;
-            }
-            else if (mode == SelectMode.Mode.FifteenPuzzle)
-            {
-                FifteenPuzzleBestSec = bestSec;
-                FifteenPuzzleBestMin = bestMin;
-                FifteenPuzzleBestHour = bestHour;
-            }
+            EightPuzzleBestSec = eightPuzzleBestSec;
+            EightPuzzleBestMin = eightPuzzleBestMin;
+            EightPuzzleBestHour = eightPuzzleBestHour;
+            
+            FifteenPuzzleBestSec = fifteenPuzzleBestSec;
+            FifteenPuzzleBestMin = fifteenPuzzleBestMin;
+            FifteenPuzzleBestHour = fifteenPuzzleBestHour;
         }
     }
 }
