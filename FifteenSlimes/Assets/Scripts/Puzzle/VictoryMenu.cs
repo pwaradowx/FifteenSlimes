@@ -86,7 +86,7 @@ namespace Project.Assets.Puzzle
 
         private async Task CoverSlimes()
         {
-            slimeCover.color = BackgroundColor.Instance.BackColor;
+            if (slimeCover != null) slimeCover.color = BackgroundColor.Instance.BackColor;
             
             float currentRad = slimeCover.material.GetFloat(CoverRadius);
             float targetRadius = 0;

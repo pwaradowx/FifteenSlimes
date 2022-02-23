@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Project.Assets.Managers;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -16,10 +15,10 @@ namespace Project.Assets.Puzzle
         [SerializeField] private GameObject slimesParent;
 
         [SerializeField] private bool createCheatGrid;
-
-        private readonly List<int> _slimesIndexes = new List<int>();
+        
         private SlimeBehaviour[,] _slimes;
         private GridTile[,] _gridTiles;
+        private int[,] _slimesNumbers;
         
         private Vector3 _slimeTargetPosition;
         private int _freeX;
@@ -127,16 +126,10 @@ namespace Project.Assets.Puzzle
             }
             
             EventManager.Instance.OnPlayerSolvedPuzzle();
-            print("You win!");
         }
 
         private void Awake()
         {
-            for (int i = 0; i < (side * side) - 1; i++) 
-            {
-                _slimesIndexes.Add(i);
-            }
-
             CreateGrid(side); 
         }
 
@@ -144,38 +137,41 @@ namespace Project.Assets.Puzzle
         {
             _slimes = new SlimeBehaviour[side, side];
             _gridTiles = new GridTile[side, side];
+            _slimesNumbers = new int[side, side];
 
-            int emptyX = Random.Range(0, side - 1);
-            int emptyY = Random.Range(0, side - 1);
+            int emptyX = side - 1;
+            int emptyY = 0;
 
             int actualTileNumber = 1;
+            int slimeNumber = 1;
 
             if (!createCheatGrid)
             {
+                // Just create slimes numbers in order from up to down and from left to right.
+                // This action creates solved puzzle.
                 for (int y = side - 1; y >= 0; y--)
                 {
                     for (int x = 0; x < side; x++)
                     {
-                        Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
-
                         _gridTiles[x, y] = new GridTile(actualTileNumber);
                         actualTileNumber++;
 
                         if (x != emptyX || y != emptyY)
                         {
-                            int slimeID = GetRandomSlimeIndex();
-                            if (slimeID >= 0)
-                            {
-                                SpawnSlime(slimesPrefabs[slimeID], position);
-                            }
+                            _slimesNumbers[x, y] = slimeNumber;
+                            slimeNumber++;
                         }
                         else
                         {
+                            _slimesNumbers[x, y] = 0;
                             _freeX = x;
                             _freeY = y;
                         }
                     }
                 }
+                
+                // Shuffle board from solved position.
+                ShuffleBoard(300);
             }
             else
             {
@@ -185,46 +181,112 @@ namespace Project.Assets.Puzzle
         
         private void CreateCheatedGrid(int actualTileNumber)
         {
-            // Spawn tiles.
+            // Cheated grid looks like solved puzzle,
+            // But empty cell locates in lowest cell on horizontal axis.
+            
+            // 1  2  3  4
+            // 5  6  7  8
+            // 9  10 11 12
+            //    13 14 15
+            
+            int emptyX = 0;
+            int emptyY = 0;
+            int slimeID = 0;
+            
             for (int y = side - 1; y >= 0; y--)
             {
                 for (int x = 0; x < side; x++)
                 {
                     _gridTiles[x, y] = new GridTile(actualTileNumber);
                     actualTileNumber++;
-                }
-            }
 
-            // Spawn first three lines.
-            int slimeID = 0;
-            for (int y = side - 1; y >= 1; y--)
-            {
-                for (int x = 0; x < side; x++)
-                {
-                    Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
-                    SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
-                    slimeID++;
+                    if (x != emptyX || y != emptyY)
+                    {
+                        Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
+                        SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
+                        slimeID++;
+                    }
                 }
-            }
-                
-            // Spawn last and lowest line.
-            int lastY = 0;
-            for (int x = 1; x < side; x++)
-            {
-                Vector3 position = new Vector3(x * tileOffset, lastY * tileOffset, 0f);
-                SpawnSlime(slimesPrefabs[slimeID].gameObject, position);
-                slimeID++;
             }
         }
 
-        private int GetRandomSlimeIndex()
+        private void ShuffleBoard(int numberOfShuffles)
         {
-            if (_slimesIndexes.Count <= 0) return -1;
-         
-            int newIndex = Random.Range(0, _slimesIndexes.Count - 1);
-            int indexToReturn = _slimesIndexes[newIndex];
-            _slimesIndexes.RemoveAt(newIndex);
-            return indexToReturn;
+            // Shuffle slimes numbers inside borders of int massive.
+            for (int i = 0; i < numberOfShuffles; i++)
+            {
+                int currentX = Random.Range(0, side);
+                int currentY = Random.Range(0, side);
+
+                if (currentX == _freeX && currentY == _freeY) continue;
+
+                int deltaX = Mathf.Abs(currentX - _freeX);
+                int deltaY = Mathf.Abs(currentY - _freeY);
+
+                if (deltaY == 0 && deltaX > 0)
+                {
+                    int dir = currentX > _freeX ? -1 : 1;
+
+                    if (dir == 1)
+                    {
+                        for (int j = _freeX - 1; j >= currentX; j--)
+                        {
+                            _slimesNumbers[j + dir, currentY] = _slimesNumbers[j, currentY];
+                        }
+                    }
+                    else
+                    {
+                        for (int j = _freeX + 1; j <= currentX; j++)    
+                        {
+                            _slimesNumbers[j + dir, currentY] = _slimesNumbers[j, currentY];
+                        }
+                    }
+                    
+                    _slimesNumbers[currentX, currentY] = 0;
+                    _freeX = currentX;
+                }
+                else if (deltaX == 0 && deltaY > 0)
+                {
+                    int dir = currentY > _freeY ? -1 : 1;
+
+                    if (dir == 1)
+                    {
+                        for (int j = _freeY - 1; j >= currentY; j--)
+                        {
+                            _slimesNumbers[currentX, j + dir] = _slimesNumbers[currentX, j];
+                        }
+                    }
+                    else
+                    {
+                        for (int j = _freeY + 1; j <= currentY; j++)
+                        {
+                            _slimesNumbers[currentX, j + dir] = _slimesNumbers[currentX, j];
+                        }
+                    }
+                    
+                    _slimesNumbers[currentX, currentY] = 0;
+                    _freeY = currentY;
+                }
+            }
+            
+            // Then spawn slimes by their numbers that were shuffled earlier.
+            for (int y = side - 1; y >= 0; y--)
+            {
+                for (int x = 0; x < side; x++)
+                {
+                    if (_slimesNumbers[x, y] == 0)
+                    {
+                        _slimes[x, y] = null;
+                        continue;
+                    }
+                    
+                    Vector3 position = new Vector3(x * tileOffset, y * tileOffset, 0f);
+
+                    int slimeID = _slimesNumbers[x, y] - 1;
+                    
+                    SpawnSlime(slimesPrefabs[slimeID], position);
+                }
+            }
         }
 
         private void SpawnSlime(GameObject slimePrefab, Vector3 position)
