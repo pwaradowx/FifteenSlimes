@@ -19,7 +19,7 @@ namespace Project.Assets.Puzzle
         [SerializeField] private TextMeshProUGUI currentTimeHolder;
         [SerializeField] private GameObject bestTimeLabel;
         [SerializeField] private TextMeshProUGUI bestTimeHolder;
-        [SerializeField] private GameObject replayButton;
+        [SerializeField] private GameObject retryButton;
         [SerializeField] private GameObject menuButton;
 
         private const float DissolveSpeed = 5f;
@@ -45,7 +45,7 @@ namespace Project.Assets.Puzzle
 
             bestTimeHolder.gameObject.SetActive(false);
 
-            replayButton.SetActive(false);
+            retryButton.SetActive(false);
 
             menuButton.SetActive(false);
         }
@@ -127,8 +127,7 @@ namespace Project.Assets.Puzzle
             bestTimeHolder.text = $"{bestTime.Item1}h:{bestTime.Item2}m:{bestTime.Item3}s";
             await Task.Delay(1000);
 
-            if (replayButton != null) replayButton.SetActive(true);
-            await Task.Delay(1000);
+            if (retryButton != null) retryButton.SetActive(true);
 
             if (menuButton != null) menuButton.SetActive(true);
         }
