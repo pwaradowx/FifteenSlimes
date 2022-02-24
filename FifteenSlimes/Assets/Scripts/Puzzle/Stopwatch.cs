@@ -56,8 +56,10 @@ namespace Project.Assets.Puzzle
 
         private void Start()
         {
-            StopwatchData data = LoadStopwatchData();
+            EventManager.Instance.PlayerSolvedPuzzleEvent += OnPlayerSolvedPuzzle;
             
+            StopwatchData data = LoadStopwatchData();
+
             if (data == null) return;
             
             _eightPuzzleBestSec = data.EightPuzzleBestSec;
@@ -67,8 +69,6 @@ namespace Project.Assets.Puzzle
             _fifteenPuzzleBestSec = data.FifteenPuzzleBestSec;
             _fifteenPuzzleBestMin = data.FifteenPuzzleBestMin;
             _fifteenPuzzleBestHour = data.FifteenPuzzleBestHour;
-
-            EventManager.Instance.PlayerSolvedPuzzleEvent += OnPlayerSolvedPuzzle;
         }
 
         private StopwatchData LoadStopwatchData()
@@ -140,29 +140,14 @@ namespace Project.Assets.Puzzle
         {
             if (mode == SelectMode.Mode.EightPuzzle)
             {
-                // If best time was changed already because as minimum one value is not equals to 0,
-                // So change best time only if it less or equals to current time by further logic. 
-                if (_eightPuzzleBestSec != 0 || _eightPuzzleBestMin != 0 || _eightPuzzleBestHour != 0)
-                {
-                    if (_currentHour <= _eightPuzzleBestHour)
-                    {
-                        _eightPuzzleBestHour = _currentHour;
-
-                        if (_currentMin <= _eightPuzzleBestMin)
-                        {
-                            _eightPuzzleBestMin = _currentMin;
-
-                            if (_currentSec <= _eightPuzzleBestSec)
-                            {
-                                _eightPuzzleBestSec = _currentSec;
-                            }
-                        }
-                    }
-                }
-                // Else means all values are equal to 0,
-                // So it means it's player's first win
-                // And we need just to save the current time values to best time values.
-                else
+                // Get time in seconds.
+                int bestTimeOverall = _eightPuzzleBestHour * 3600 + _eightPuzzleBestMin * 60 + _eightPuzzleBestSec;
+                int currentTimeOverall = _currentHour * 3600 + _currentMin * 60 + _currentSec;
+                
+                // If best time equals to 0, that means it is first game attempt or first game after reset.
+                // So in this case best time is equals to current time.
+                // Also we update best time if current time is lesser than previous record.
+                if (bestTimeOverall == 0 || currentTimeOverall < bestTimeOverall)
                 {
                     _eightPuzzleBestHour = _currentHour;
                     _eightPuzzleBestMin = _currentMin;
@@ -171,27 +156,15 @@ namespace Project.Assets.Puzzle
             }
             else if (mode == SelectMode.Mode.FifteenPuzzle)
             {
-                if (_fifteenPuzzleBestSec != 0 || _fifteenPuzzleBestMin != 0 || _fifteenPuzzleBestHour != 0)
-                {
-                    if (_currentHour <= _fifteenPuzzleBestHour)
-                    {
-                        _fifteenPuzzleBestHour = _currentHour;
+                // Get time in seconds.
+                int bestTimeOverall =
+                    _fifteenPuzzleBestHour * 3600 + _fifteenPuzzleBestMin * 60 + _fifteenPuzzleBestSec;
+                int currentTimeOverall = _currentHour * 3600 + _currentMin * 60 + _currentSec;
 
-                        if (_currentMin <= _fifteenPuzzleBestMin)
-                        {
-                            _fifteenPuzzleBestMin = _currentMin;
-
-                            if (_currentSec <= _fifteenPuzzleBestSec)
-                            {
-                                _fifteenPuzzleBestSec = _currentSec;
-                            }
-                        }
-                    }
-                }
-                // Else means all values are equal to 0,
-                // So it means it's player's first win
-                // And we need just to save the current time values to best time values.
-                else
+                // If best time equals to 0, that means it is first game attempt or first game after reset.
+                // So in this case best time is equals to current time.
+                // Also we update best time if current time is lesser than previous record.
+                if (bestTimeOverall == 0 || currentTimeOverall < bestTimeOverall)
                 {
                     _fifteenPuzzleBestHour = _currentHour;
                     _fifteenPuzzleBestMin = _currentMin;
