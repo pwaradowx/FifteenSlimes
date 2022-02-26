@@ -11,6 +11,10 @@ namespace Project.Assets.Managers
         [SerializeField] private AudioSource audioSource;
         
         public static AudioManager Instance;
+
+        public bool IsAudioOn;
+        
+        private const string AudioStateKey = "AudioState";
         
         private void Awake()
         {
@@ -32,21 +36,30 @@ namespace Project.Assets.Managers
             {
                 Debug.LogError("One of the audio sources is missing!");
             }
+            
+            if (PlayerPrefs.GetInt(AudioStateKey) == 0)
+            {
+                IsAudioOn = true;
+            }
+            else
+            {
+                IsAudioOn = PlayerPrefs.GetInt(AudioStateKey) == 1;
+            }
         }
 
         public void PlaySlimeSound()
-        {
-            audioSource.PlayOneShot(slimeSound);
+        {  
+            if (IsAudioOn) audioSource.PlayOneShot(slimeSound);
         }
 
         public void PlayClickSound()
         {
-            audioSource.PlayOneShot(clickSound);
+            if (IsAudioOn) audioSource.PlayOneShot(clickSound);
         }
 
         public void PlayMenuAppearSound()
         {
-            audioSource.PlayOneShot(menuAppearSound);
+            if (IsAudioOn) audioSource.PlayOneShot(menuAppearSound);
         }
     }
 }

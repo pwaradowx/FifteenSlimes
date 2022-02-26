@@ -921,7 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTimeHolder: {fileID: 1953626659}
-  mode: 1
+  mode: 2
 --- !u!4 &870526004
 Transform:
   m_ObjectHideFlags: 0

@@ -8,8 +8,8 @@ namespace Project.Assets.MainMenu
         
         public enum Mode
         {
-            EightPuzzle = 1,
-            FifteenPuzzle = 2
+            EightPuzzle = 2,
+            FifteenPuzzle = 3
         }
         public Mode CurrentMode;
         

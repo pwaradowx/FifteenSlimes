@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu/MainMenu.unity
     guid: 4963e359fbfc63d41b363e6e26257495
   - enabled: 1
+    path: Assets/Scenes/Settings/Settings.unity
+    guid: 6cdb2323ae41f904cb6c8a2532dbe3bb
+  - enabled: 1
     path: Assets/Scenes/EightPuzzle/EightPuzzle.unity
     guid: 14f02dc001644ab4b9046166bd238859
   - enabled: 1

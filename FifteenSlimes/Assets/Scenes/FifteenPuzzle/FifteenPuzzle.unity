@@ -1924,7 +1924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTimeHolder: {fileID: 1085821804}
-  mode: 2
+  mode: 3
 --- !u!1 &2015607103
 GameObject:
   m_ObjectHideFlags: 0
