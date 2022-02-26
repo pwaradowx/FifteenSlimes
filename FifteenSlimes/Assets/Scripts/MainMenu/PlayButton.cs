@@ -19,6 +19,8 @@ namespace Project.Assets.MainMenu
         public void OnPointerDown(PointerEventData eventData)
         {
             Squash();
+            
+            AudioManager.Instance.PlayClickSound();
         }
 
         public void OnPointerUp(PointerEventData eventData)

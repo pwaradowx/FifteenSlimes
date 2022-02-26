@@ -1,3 +1,4 @@
+using Project.Assets.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -34,6 +35,8 @@ namespace Project.Assets.MainMenu
             _buttonImage.color = ChekedColor;
             
             Squash();
+            
+            AudioManager.Instance.PlayClickSound();
         }
 
         public void OnPointerUp(PointerEventData eventData)

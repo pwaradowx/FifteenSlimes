@@ -62,6 +62,8 @@ namespace Project.Assets.Puzzle
                 _slimes[currentX, currentY] = null;
                 _freeX = currentX;
                 
+                AudioManager.Instance.PlaySlimeSound();
+                
                 CheckVictory();
             }
             else if (deltaX == 0 && deltaY > 0)
@@ -93,6 +95,8 @@ namespace Project.Assets.Puzzle
                 
                 _slimes[currentX, currentY] = null;
                 _freeY = currentY;
+                
+                AudioManager.Instance.PlaySlimeSound();
                 
                 CheckVictory();
             }

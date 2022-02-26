@@ -108,27 +108,32 @@ namespace Project.Assets.Puzzle
 
         private async Task ShowMenuElements()
         {
+            AudioManager.Instance.PlayMenuAppearSound();
             if (victoryText != null) victoryText.SetActive(true);
             await Task.Delay(1000);
             
+            AudioManager.Instance.PlayMenuAppearSound();
             if (currentTimeLabel != null) currentTimeLabel.SetActive(true);
             await Task.Delay(1000);
             
             var currentTime = stopwatch.GetCurrentTime();
+            AudioManager.Instance.PlayMenuAppearSound();
             if (currentTimeHolder != null) currentTimeHolder.gameObject.SetActive(true);
             currentTimeHolder.text = $"{currentTime.Item1}h:{currentTime.Item2}m:{currentTime.Item3}s";
             await Task.Delay(1000);
             
+            AudioManager.Instance.PlayMenuAppearSound();
             if (bestTimeLabel != null) bestTimeLabel.SetActive(true);
             await Task.Delay(1000);
 
             var bestTime = stopwatch.GetBestTime();
+            AudioManager.Instance.PlayMenuAppearSound();
             if (bestTimeHolder != null) bestTimeHolder.gameObject.SetActive(true);
             bestTimeHolder.text = $"{bestTime.Item1}h:{bestTime.Item2}m:{bestTime.Item3}s";
             await Task.Delay(1000);
 
+            AudioManager.Instance.PlayMenuAppearSound();
             if (retryButton != null) retryButton.SetActive(true);
-
             if (menuButton != null) menuButton.SetActive(true);
         }
 

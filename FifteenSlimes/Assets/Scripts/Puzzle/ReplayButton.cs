@@ -16,6 +16,8 @@ namespace Project.Assets.Puzzle
         public void OnPointerDown(PointerEventData eventData)
         {
             Squash();
+            
+            AudioManager.Instance.PlayClickSound();
         }
 
         public void OnPointerUp(PointerEventData eventData)
