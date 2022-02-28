@@ -7,7 +7,7 @@ using Button = Project.Assets.Other.Button;
 namespace Project.Assets.MainMenu
 {
     [RequireComponent(typeof(RawImage))]
-    public class ModeButton : Button, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+    public class ModeButton : Button, IPointerDownHandler, IPointerUpHandler
     {
         [SerializeField] private SelectMode selectMode;
         [SerializeField] private SelectMode.Mode modeToSwitch;
@@ -21,11 +21,6 @@ namespace Project.Assets.MainMenu
         private readonly Color ChekedColor = new Color(255f, 255f, 255f, 1f);
         private readonly Color UnchekedColor = new Color(255f, 255f, 255f, 0.3f);
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            selectMode.CurrentMode = modeToSwitch;
-        }
-
         public void OnPointerDown(PointerEventData eventData)
         {
             foreach (var button in selectMode.ModesButtons)
@@ -33,6 +28,8 @@ namespace Project.Assets.MainMenu
                 button._buttonImage.color = UnchekedColor;
             }
             _buttonImage.color = ChekedColor;
+            
+            selectMode.CurrentMode = modeToSwitch;
             
             Squash();
             

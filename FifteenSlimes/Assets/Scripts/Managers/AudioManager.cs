@@ -59,7 +59,7 @@ namespace Project.Assets.Managers
 
         public void PlayMenuAppearSound()
         {
-            if (IsAudioOn) audioSource.PlayOneShot(menuAppearSound);
+            if (IsAudioOn && !audioSource.isPlaying) audioSource.PlayOneShot(menuAppearSound);
         }
     }
 }
