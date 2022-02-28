@@ -29,14 +29,14 @@ namespace Project.Assets.Puzzle
         public void Move(Vector3 goalPos, RectTransform.Axis axis)
         {
             IsImMoving = true;
-            
-            StartCoroutine(MoveSlimeModel(goalPos, axis));
 
             if (_squashCoroutine != null)
             {
                 StopCoroutine(_squashCoroutine);
                 _isSquashDone = true;
             }
+            
+            StartCoroutine(MoveSlimeModel(goalPos, axis));
         }
         
         private IEnumerator MoveSlimeModel(Vector3 goalPos, RectTransform.Axis axis)
