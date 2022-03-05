@@ -1,4 +1,3 @@
-using Project.Assets.Managers;
 using UnityEngine;
 
 namespace Project.Assets.Puzzle
@@ -19,7 +18,7 @@ namespace Project.Assets.Puzzle
 
             _firstTouchWasYet = false;
 
-            EventManager.Instance.PlayerSolvedPuzzleEvent += () => _allowToTouch = false;
+            GridSystem.PuzzleSolvedEvent += () => _allowToTouch = false;
         }
         
         private void Update()

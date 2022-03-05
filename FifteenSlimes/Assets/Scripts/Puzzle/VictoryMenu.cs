@@ -30,7 +30,7 @@ namespace Project.Assets.Puzzle
         {
             DisableMenu();
             
-            EventManager.Instance.PlayerSolvedPuzzleEvent += Process;
+            GridSystem.PuzzleSolvedEvent += Process;
         }
 
         private void DisableMenu()

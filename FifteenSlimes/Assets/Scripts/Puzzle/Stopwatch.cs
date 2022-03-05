@@ -1,7 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Project.Assets.MainMenu;
-using Project.Assets.Managers;
 using UnityEngine;
 using TMPro;
 
@@ -56,7 +55,7 @@ namespace Project.Assets.Puzzle
 
         private void Start()
         {
-            EventManager.Instance.PlayerSolvedPuzzleEvent += OnPlayerSolvedPuzzle;
+            GridSystem.PuzzleSolvedEvent += OnPlayerSolvedPuzzle;
             
             StopwatchData data = LoadStopwatchData();
 

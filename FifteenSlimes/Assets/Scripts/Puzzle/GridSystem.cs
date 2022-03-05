@@ -4,6 +4,8 @@ using Random = UnityEngine.Random;
 
 namespace Project.Assets.Puzzle
 {
+    public delegate void PuzzleSolved();
+
     public class GridSystem : MonoBehaviour
     {
         [SerializeField] private int side;
@@ -15,6 +17,8 @@ namespace Project.Assets.Puzzle
         [SerializeField] private GameObject slimesParent;
 
         [SerializeField] private bool createCheatGrid;
+
+        public static event PuzzleSolved PuzzleSolvedEvent;
         
         private SlimeBehaviour[,] _slimes;
         private GridTile[,] _gridTiles;
@@ -129,7 +133,7 @@ namespace Project.Assets.Puzzle
                 }
             }
             
-            EventManager.Instance.OnPlayerSolvedPuzzle();
+            PuzzleSolvedEvent?.Invoke();
         }
 
         private void Awake()
